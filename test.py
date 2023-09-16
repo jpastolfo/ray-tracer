@@ -1,18 +1,29 @@
+import sys,os
+
 import matplotlib.pyplot as plt
-from entities.beam import Beam
-from entities.entities import Source
-from entities.optical_elements import Mirror
+from entities.beam import Ray
+from entities.source import Source
+from entities.optical_elements import PlaneMirror
+
+sys.path.append("/home/astolfo/Projects/ray-tracer/test.py")
+
 
 plt.figure()
 
-beam = Beam("red")
-source = Source(0,0,0)
-mirror = Mirror(2,0,45,2)
-mirror1 = Mirror(2,2,15,1)
-mirror2 = Mirror(-2,-5,-60,4)
+source = Source(-5,0,0,"red")
+mirror0 = PlaneMirror(0,0,40,4)
+mirror1 = PlaneMirror(0,5,-135,6)
+mirror2 = PlaneMirror(5,5,135,10)
+mirror3 = PlaneMirror(5,0,-45,4)
+mirror4 = PlaneMirror(8,0,90,4)
 
-path = [source,mirror,mirror1,mirror2]
-beam.append_to_path(*path)
-beam.trace()
+objects = [mirror0,mirror1,mirror2,mirror3,mirror4]
 
+ray = source.generate_ray()
+ray.trace(objects)
+ray.draw()
+
+
+plt.xlim(-10,10)
+plt.ylim(-10,10)
 plt.show()
