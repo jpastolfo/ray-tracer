@@ -26,3 +26,16 @@ class Lamp(Source):
     def generate_rays(self):
         rays = [Ray(self.x,self.y,angle,self.color) for angle in np.linspace(0,360,self.n_rays)]
         return rays
+
+
+class DivergentSource(Source):
+    def __init__(self,x:float,y:float,divergence:float,color:str,n_rays:int=1):
+        super().__init__(x,y,0,color,n_rays=n_rays)
+        
+        self.divergence = divergence
+    
+    
+    def generate_rays(self):
+        angles = np.linspace(-self.divergence/2,self.divergence/2,self.n_rays)
+        rays = [Ray(self.x,self.y,angle,self.color) for angle in angles]
+        return rays

@@ -23,7 +23,7 @@ class Ray:
         self.calculate_direction(angle)
         self.color = color
         self.path = Path(self.x,self.y)
-        self.max_collisions = 5
+        self.max_collisions = 10
     
     
     def calculate_direction(self,angle):

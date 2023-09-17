@@ -56,6 +56,6 @@ class PlaneMirror(OpticalElement):
         dx = (self.size/2) * np.cos(np.radians(self.angle))
         dy = (self.size/2) * np.sin(np.radians(self.angle))
         plt.plot([self.x-dx, self.x+dx],[self.y-dy, self.y+dy],color="black")
-        plt.arrow(self.x,self.y,*self.direction,color="green",width=0.1)
-        plt.arrow(self.x,self.y,*self.normal,color="orange",width=0.1)
+        # plt.arrow(self.x,self.y,*self.direction,color="green",width=0.001)
+        # plt.arrow(self.x,self.y,*self.normal,color="orange",width=0.001)
         

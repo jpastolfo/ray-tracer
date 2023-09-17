@@ -4,26 +4,21 @@ import matplotlib.pyplot as plt
 from entities.beam import Ray
 from entities.source import *
 from entities.optical_elements import PlaneMirror
+from entities.optical_table import OpticalTable
 
-sys.path.append("/home/astolfo/Projects/ray-tracer/test.py")
 
+table = OpticalTable(3,2,gridspacing=0.2,scale=5)
 
-plt.figure()
-
-#source = Source(-5,0,0,"red")
-lamp = Lamp(-5,0,"red",100)
-mirror0 = PlaneMirror(0,0,40,4)
-mirror1 = PlaneMirror(0,5,-135,6)
-mirror2 = PlaneMirror(5,5,135,10)
-mirror3 = PlaneMirror(5,0,-45,4)
+divSource = DivergentSource(0,1,0.1,"red",n_rays=5)
+mirror0 = PlaneMirror(0.5,1,45,0.1)
+mirror1 = PlaneMirror(0.5,1.5,-135,0.1)
+mirror2 = PlaneMirror(1.5,1.5,135,0.1)
+mirror3 = PlaneMirror(1.5,1,-45,0.1)
 
 objects = [mirror0,mirror1,mirror2,mirror3]
 
-for ray in lamp.generate_rays():
+for ray in divSource.generate_rays():
     ray.trace(objects)
     ray.draw()
 
-
-plt.xlim(-10,10)
-plt.ylim(-10,10)
-plt.show()
+table.draw()
