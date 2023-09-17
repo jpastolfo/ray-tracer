@@ -17,7 +17,5 @@ This is a small project for optical table layout design that will allow easy ima
 Any help is appreciated!
 
 ### Future planned features:
-- Full 2D ray tracer
-- Full 3D ray tracer
-- Collision detection for precise reflections
+- Full 2D ray trace
 - User interface for interactive layout design
