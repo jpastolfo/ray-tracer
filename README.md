@@ -12,7 +12,7 @@
   </a>
 </p>
 
-This is a small project for optical table layout design that will allow easy image creation, based on matplotlib.
+This is a small project for optical table layout design. It is not meant for optics simulation, only ray tracing along the optical elements (with collision detection).
 
 Any help is appreciated!
 
