@@ -17,21 +17,28 @@ class Path:
     
 
 class Ray:
-    def __init__(self,x,y,angle,color):
+    def __init__(self,x,y,orientation,wavelength,color,source=None):
         self.x = x
         self.y = y
-        self.calculate_direction(angle)
+        self.orientation = orientation
+        self.calculate_direction(self.orientation)
+        self.wavelength = wavelength 
         self.color = color
         self.path = Path(self.x,self.y)
         self.max_collisions = 10
-    
+        self.source = source
+
     
     def calculate_direction(self,angle):
         self.direction = [np.cos(np.radians(angle)),
                           np.sin(np.radians(angle))]
             
     
-    def trace(self,objects):
+    def trace(self):
+        table = self.source.table
+        objects = table.optical_elements if table.optical_elements != None else []
+        print(objects)
+        
         collisions = 0
         while collisions < self.max_collisions:
             distances = [element.intersect(self) for element in objects]

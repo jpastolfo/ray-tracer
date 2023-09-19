@@ -8,6 +8,9 @@ class OpticalTable:
         self.width = width
         self.gridspacing = gridspacing
         self.scale = scale
+
+        self.sources = []
+        self.optical_elements = []
         
         self.initialize_table(self.length,self.width)
         
@@ -41,6 +44,17 @@ class OpticalTable:
         plt.scatter(minor_grid[0],minor_grid[1],color="grey",alpha=0.5,s=5)
         
         # plt.axis("off")
+
+    
+    def append_source(self,*sources):
+        for source in sources:
+            self.sources.append(source)
+    
+
+    def append_optical_element(self,*optical_elements):
+        for element in optical_elements:
+            print(element)
+            self.optical_elements.append(element)
         
 
     def draw(self):
