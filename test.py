@@ -6,7 +6,10 @@ from entities.optical_table import OpticalTable
 
 table = OpticalTable(3,2,gridspacing=0.2,scale=5)
 
-divSource = PointSource(table,0,1,0,100,5,color="red",n_rays=11)
+divSource = BoxSource(table,x=0,y=1,
+                      length=0.1,width=0.05,orientation=0,
+                      wavelength=100,divergence=5,
+                      color="red",n_rays=11)
 mirror0 = PlaneMirror(table,0.5,1,45,0.2)
 mirror1 = PlaneMirror(table,0.5,1.5,-135,0.2)
 mirror2 = PlaneMirror(table,1.5,1.5,135,0.2)

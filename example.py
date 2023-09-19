@@ -1,5 +1,5 @@
 from entities.optical_table import OpticalTable
-from entities.source import PointSource
+from entities.source import PointSource, BoxSource
 
 from entities.optical_elements import PlaneMirror,Dicroic
 
@@ -10,30 +10,23 @@ table = OpticalTable(length=1.2,
                      scale=10)
 
 ## SOURCES
-source_ir0 = PointSource(table,
-                         x=0.2,
-                         y=0.7,
-                         orientation=-90,
-                         wavelength=1064,
-                         divergence=0,
-                         color="red")
+source_ir0 = BoxSource(table,
+                       x=0.2,y=0.7,
+                       length=0.1,width=0.025,orientation=-90,
+                       wavelength=1064,divergence=0,
+                       color="red")
 
-source_ir1 = PointSource(table,
-                         x=1.0,
-                         y=0.7,
-                         orientation=-90,
-                         wavelength=1064,
-                         divergence=0,
-                         color="red",
-                         n_rays=1)
+source_ir1 = BoxSource(table,
+                       x=1.0,y=0.7,
+                       length=0.1,width=0.025,orientation=-135,
+                       wavelength=1064,divergence=0,
+                       color="red")
 
-source_verdi = PointSource(table,
-                           x=0.1,
-                           y=0.1,
-                           orientation=0,
-                           wavelength=450,
-                           divergence=0,
-                           color="green")
+source_verdi = BoxSource(table,
+                         x=0.1,y=0.1,
+                         length=0.2,width=0.05,orientation=0,
+                         wavelength=450,divergence=0,
+                         color="green")
 
 ### OPTICAL ELEMENTS
 mirror0 = PlaneMirror(table,
