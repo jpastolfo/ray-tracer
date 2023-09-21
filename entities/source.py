@@ -6,7 +6,8 @@ from .beam import Ray
 class Source:
     def __init__(self,table,x:float,y:float,
                  orientation:float=0.0,wavelength:float=500.0,
-                 color:str="red",n_rays:int=1):
+                 color:str="red",n_rays:int=1,max_collisions:int=10,
+                 linestyle:str="solid"):
         self.table = table
         self.x = x
         self.y = y
@@ -14,6 +15,8 @@ class Source:
         self.wavelength = wavelength
         self.color = color
         self.n_rays = n_rays
+        self.max_collisions = max_collisions
+        self.linestyle = linestyle
 
         self.table.append_source(self)
 
@@ -32,7 +35,7 @@ class PointSource(Source):
         angles = np.linspace(self.orientation + self.divergence/2,
                              self.orientation - self.divergence/2,
                              self.n_rays)
-        rays = [Ray(self.x,self.y,angle,self.wavelength,self.color,source=self) for angle in angles]
+        rays = [Ray(self.x,self.y,angle,self.wavelength,self.color,source=self,max_collisions=self.max_collisions,linestyle=self.linestyle) for angle in angles]
         return rays
     
 
@@ -76,5 +79,5 @@ class BoxSource(Source):
         x_ray += self.x; y_ray += self.y
 
         rays = [Ray(x_ray,y_ray,angle,
-                    self.wavelength,self.color,source=self) for angle in angles]
+                    self.wavelength,self.color,source=self,max_collisions=self.max_collisions) for angle in angles]
         return rays

@@ -17,7 +17,7 @@ class Path:
     
 
 class Ray:
-    def __init__(self,x,y,orientation,wavelength,color,source=None):
+    def __init__(self,x,y,orientation,wavelength,color,source=None,max_collisions:int=10,linestyle:str="solid"):
         self.x = x
         self.y = y
         self.orientation = orientation
@@ -25,8 +25,9 @@ class Ray:
         self.wavelength = wavelength 
         self.color = color
         self.path = Path(self.x,self.y)
-        self.max_collisions = 10
+        self.max_collisions = max_collisions
         self.source = source
+        self.linestyle = linestyle
 
     
     def calculate_direction(self,angle):
@@ -82,4 +83,4 @@ class Ray:
     
     def draw(self):
         print(self.path)
-        plt.plot(self.path.x,self.path.y,color=self.color)
+        plt.plot(self.path.x,self.path.y,color=self.color,linestyle=self.linestyle)

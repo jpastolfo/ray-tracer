@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 from entities.beam import Ray
 from entities.source import *
-from entities.optical_elements import PlaneMirror, BeamSplitter
+from entities.optical_elements import PlaneMirror, Dicroic
 from entities.optical_table import OpticalTable
 from entities.geometry import Box
 
@@ -14,7 +14,7 @@ source_verdi = BoxSource(table,x=0.4,y=0.4,
 
 source_ir = BoxSource(table,x=3.7,y=3.9,
                       length=1.0,width=0.15,orientation=-90,
-                      wavelength=1000,divergence=0,
+                      wavelength=1064,divergence=0,
                       color="red",n_rays=1)
 
 spectrometer = Box(table,x=0.3,y=2.5,
@@ -37,7 +37,7 @@ mirror1 = PlaneMirror(table,1.1,0.9,60,0.2)
 mirror2 = PlaneMirror(table,1.9,0.9,-135,0.2)
 mirror3 = PlaneMirror(table,1.9,4.9,45,0.1)
 mirror4 = PlaneMirror(table,2.3,4.9,-45,0.1)
-mirror5 = PlaneMirror(table,2.3,3.3,-45,0.2)
+mirror5 = Dicroic(table,2.3,3.3,-45,0.2,wavelength_range=[1000,1100])
 mirror6 = PlaneMirror(table,3.3,3.3,135,0.2)
 mirror7 = PlaneMirror(table,3.3,1.7,-45,0.2)
 mirror8 = PlaneMirror(table,3.7,1.7,45,0.2)
