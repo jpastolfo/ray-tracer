@@ -2,23 +2,22 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 class OpticalTable:
-    def __init__(self,length:float,width:float,gridspacing:float=1.0,scale:float=10):
+    def __init__(self,dimension:tuple[float,float],gridspacing:float=1.0,scale:float=10):
         
-        self.length = length
-        self.width = width
+        self.length, self.width = dimension
         self.gridspacing = gridspacing
         self.scale = scale
 
         self.sources = []
         self.optical_elements = []
         
-        self.initialize_table(self.length,self.width)
+        self.initialize_table()
         
         
-    def initialize_table(self,length,width):
-        plt.figure(figsize=(length*self.scale,width*self.scale),frameon=False)
-        table_perimeter = np.array([[0,0,length,length,0],
-                                    [0,width,width,0,0],])
+    def initialize_table(self):
+        plt.figure(figsize=(self.length*self.scale,self.width*self.scale),frameon=False)
+        table_perimeter = np.array([[0,0,self.length,self.length,0],
+                                    [0,self.width,self.width,0,0],])
         offset = np.array([[-1,-1,1,1,-1],
                            [-1,1,1,-1,-1]])*self.gridspacing/4
         
@@ -29,19 +28,12 @@ class OpticalTable:
                  color="black")
         
         grid = [[],[]]
-        for x in np.arange(0,length+self.gridspacing,self.gridspacing):
-            for y in np.arange(0,width+self.gridspacing,self.gridspacing):
+        for x in np.arange(0,self.length+self.gridspacing,self.gridspacing):
+            for y in np.arange(0,self.width+self.gridspacing,self.gridspacing):
                 grid[0].append(x)
                 grid[1].append(y)
         
-        minor_grid = [[],[]]
-        for x in np.arange(self.gridspacing*1/2,length+self.gridspacing*1/2,self.gridspacing):
-            for y in np.arange(self.gridspacing*1/2,width+self.gridspacing*1/2,self.gridspacing):
-                minor_grid[0].append(x)
-                minor_grid[1].append(y)
-        
         plt.scatter(grid[0],grid[1],color="grey",alpha=0.5,s=10)
-        plt.scatter(minor_grid[0],minor_grid[1],color="grey",alpha=0.5,s=5)
         
         # plt.axis("off")
 
@@ -51,9 +43,9 @@ class OpticalTable:
             self.sources.append(source)
     
 
-    def append_optical_element(self,*optical_elements):
+    def append_optical_element(self,*optical_elements,verbose:bool=False):
         for element in optical_elements:
-            print(element)
+            if verbose: print(element)
             self.optical_elements.append(element)
         
 

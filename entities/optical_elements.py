@@ -3,14 +3,11 @@ import numpy as np
 
 from entities.beam import Ray
 
-from .beam import Ray
-
 
 class OpticalElement:
-    def __init__(self,table,x:float,y:float,orientation:float,size:float):
+    def __init__(self,table,position:tuple[float,float],orientation:float,size:float):
         self.table = table
-        self.x = x
-        self.y = y
+        self.x,self.y = position
         self.orientation = orientation
         self.size = size
 
@@ -26,8 +23,8 @@ class OpticalElement:
 
 
 class PlaneMirror(OpticalElement):
-    def __init__(self,table,x:float,y:float,orientation:float,size:float):
-        super().__init__(table,x,y,orientation,size)
+    def __init__(self,table,position:tuple[float,float],orientation:float,size:float):
+        super().__init__(table,position,orientation,size)
         self.direction = self.calculate_tangent_vector(self.orientation)
         self.normal = self.calculate_normal_vector(self.direction)
         self.draw()
@@ -42,7 +39,7 @@ class PlaneMirror(OpticalElement):
         return [-direction[1],direction[0]]
         
     
-    def intersect(self,ray:Ray):
+    def intersect(self,ray:Ray,verbose:bool=False):
         denominator = ray.direction[0]*self.direction[1] - ray.direction[1]*self.direction[0]
             
         if denominator == 0 : return np.inf
@@ -52,7 +49,7 @@ class PlaneMirror(OpticalElement):
 
         t = numerator/denominator
         u = numerator2/denominator
-        print(f"t: {t}, u: {u}")
+        if verbose: print(f"t: {t}, u: {u}")
         if t > 1e-6 and abs(u) <= self.size/2: return t
         return np.inf
     
@@ -66,26 +63,26 @@ class PlaneMirror(OpticalElement):
 
 
 class Dicroic(PlaneMirror):
-    def __init__(self,table,x:float,y:float,orientation:float,size:float,wavelength_range:list):
-        super().__init__(table,x,y,orientation,size)
+    def __init__(self,table,position:tuple[float,float],orientation:float,size:float,wavelength_range:list):
+        super().__init__(table,position,orientation,size)
         self.wavelength_range = wavelength_range
     
-    def intersect(self, ray: Ray):
+    def intersect(self,ray:Ray):
         if self.wavelength_range[0] <= ray.wavelength <= self.wavelength_range[1]:
             return super().intersect(ray)
         return np.inf
     
 
 class BeamSplitter(PlaneMirror):
-    def __init__(self,x:float,y:float,orientation:float,size:float):
-        super().__init__(x,y,orientation,size)
+    def __init__(self,table,position:tuple[float,float],orientation:float,size:float):
+        super().__init__(table,position,orientation,size)
 
 
-    def intersect(self, ray: Ray):
+    def intersect(self,ray: Ray):
         transmitted_ray = Ray(ray.x,ray.y,ray.orientation,ray.wavelength,ray.color,source=ray.source)
         transmitted_ray.x += ray.direction[0]*1e3
         transmitted_ray.y += ray.direction[1]*1e3
-        transmitted_ray.trace()
+        transmitted_ray.trace(ignore_first_element=self)
         transmitted_ray.draw()
         return super().intersect(ray)
         

@@ -17,9 +17,10 @@ class Path:
     
 
 class Ray:
-    def __init__(self,x,y,orientation,wavelength,color,source=None,max_collisions:int=10,linestyle:str="solid"):
-        self.x = x
-        self.y = y
+    def __init__(self,position:tuple[float,float],orientation:float,wavelength:float,
+                 color:str,source=None,max_collisions:int=10,linestyle:str="solid"):
+        
+        self.x,self.y = position
         self.orientation = orientation
         self.calculate_direction(self.orientation)
         self.wavelength = wavelength 
@@ -35,25 +36,28 @@ class Ray:
                           np.sin(np.radians(angle))]
             
     
-    def trace(self):
+    def trace(self,ignore_first_element=None, verbose:bool=False):
         table = self.source.table
         objects = table.optical_elements if table.optical_elements != None else []
-        print(objects)
+        if ignore_first_element != None:
+            objects.remove(ignore_first_element)
+        if verbose: print(objects)
         
         collisions = 0
         while collisions < self.max_collisions:
             distances = [element.intersect(self) for element in objects]
             nearest_element = None
             min_distance = np.inf
-            print(f"Distances: {distances}")
+            if verbose: print(f"Distances: {distances}")
             
             for index, distance in enumerate(distances):
                 if distance and distance < min_distance:
                     min_distance = distance
                     nearest_element = objects[index]
-                
-            print(f"Nearest Element: {nearest_element}")
-            print(f"Minimum Distance: {min_distance}")
+
+            if verbose:   
+                print(f"Nearest Element: {nearest_element}")
+                print(f"Minimum Distance: {min_distance}")
             
             if nearest_element == None:
                 self.path.append(self.x + self.direction[0]*1e3,
@@ -70,17 +74,17 @@ class Ray:
         self.direction = [dir_x,dir_y]
         
     
-    def update_beam(self,element,distance):
+    def update_beam(self,element,distance,verbose:bool=False):
         self.x += self.direction[0]*(distance)
         self.y += self.direction[1]*(distance)
         self.path.append(self.x,self.y)
-        # self.x += 1e-5; self.y += 1e-5
         self.reflect(element)
-        print("UPDATED")
-        print(self.direction)
-        print(self.x,self.y)
+        if verbose:
+            print("UPDATED")
+            print(self.direction)
+            print(self.x,self.y)
     
     
-    def draw(self):
-        print(self.path)
+    def draw(self,verbose:bool=False):
+        if verbose: print(self.path)
         plt.plot(self.path.x,self.path.y,color=self.color,linestyle=self.linestyle)

@@ -1,16 +1,16 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-from .beam import Ray
+from entities.beam import Ray
 
 class Source:
-    def __init__(self,table,x:float,y:float,
+    def __init__(self,table,position:tuple[float,float],
                  orientation:float=0.0,wavelength:float=500.0,
                  color:str="red",n_rays:int=1,max_collisions:int=10,
                  linestyle:str="solid"):
+        
         self.table = table
-        self.x = x
-        self.y = y
+        self.x, self.y = position
         self.orientation = orientation
         self.wavelength = wavelength
         self.color = color
@@ -26,8 +26,8 @@ class Source:
     
 
 class PointSource(Source):
-    def __init__(self,table,x:float,y:float,divergence:float,**kwargs):
-        super().__init__(table,x,y,**kwargs)
+    def __init__(self,table,position:tuple[float,float],divergence:float,**kwargs):
+        super().__init__(table,position,**kwargs)
         self.divergence = divergence
     
     
@@ -35,16 +35,21 @@ class PointSource(Source):
         angles = np.linspace(self.orientation + self.divergence/2,
                              self.orientation - self.divergence/2,
                              self.n_rays)
-        rays = [Ray(self.x,self.y,angle,self.wavelength,self.color,source=self,max_collisions=self.max_collisions,linestyle=self.linestyle) for angle in angles]
+        rays = [Ray(position=(self.x,self.y),
+                    orientation=angle,
+                    wavelength=self.wavelength,
+                    color=self.color,
+                    source=self,
+                    max_collisions=self.max_collisions,
+                    linestyle=self.linestyle) for angle in angles]
         return rays
     
 
 class BoxSource(Source):
-    def __init__(self,table,x:float,y:float,divergence:float,length:float,width:float,**kwargs):
-        super().__init__(table,x,y,**kwargs)
+    def __init__(self,table,position:tuple[float,float],divergence:float,dimension:tuple[float,float],**kwargs):
+        super().__init__(table,position,**kwargs)
         self.divergence = divergence
-        self.length = length
-        self.width = width
+        self.length,self.width = dimension
         
         self.draw()
 
@@ -77,7 +82,13 @@ class BoxSource(Source):
             x_ray = x_rotated; y_ray = y_rotated
 
         x_ray += self.x; y_ray += self.y
-
-        rays = [Ray(x_ray,y_ray,angle,
-                    self.wavelength,self.color,source=self,max_collisions=self.max_collisions) for angle in angles]
+        
+        rays = [Ray(position=(x_ray,y_ray),
+                    orientation=angle,
+                    wavelength=self.wavelength,
+                    color=self.color,
+                    source=self,
+                    max_collisions=self.max_collisions,
+                    linestyle=self.linestyle) for angle in angles]
+        
         return rays

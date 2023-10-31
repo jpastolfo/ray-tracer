@@ -3,13 +3,11 @@ import matplotlib.pyplot as plt
 
 
 class Box:
-    def __init__(self, table: object, x: float, y: float, orientation :float, length: float, width: float) -> object:
+    def __init__(self,table:object,position:tuple[float,float],orientation:float,dimension:tuple[float,float]) -> object:
         self.table = table
-        self.x = x
-        self.y = y
+        self.x,self.y = position
         self.orientation = orientation
-        self.length = length
-        self.width = width
+        self.length,self.width = dimension
         self.draw()
 
     def draw(self):
