@@ -5,7 +5,7 @@
     <img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/jpastolfo/ray-tracer"/>
   </a>
   <a>
-    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/jpastolfo/ADA-Locate-Car"/>
+    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/jpastolfo/ray-tracer"/>
   </a>
   <a href="https://github.com/jpastolfo/ray-tracer/blob/master/LICENSE">
     <img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-yellow.svg" target="_blank" />
