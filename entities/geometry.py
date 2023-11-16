@@ -1,9 +1,10 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+from typing import Tuple
 
 class Box:
-    def __init__(self,table:object,position:tuple[float,float],orientation:float,dimension:tuple[float,float]) -> object:
+    def __init__(self,table:object,position:"tuple[float,float]",orientation:float,dimension:"tuple[float,float]") -> object:
         self.table = table
         self.x,self.y = position
         self.orientation = orientation

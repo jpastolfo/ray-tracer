@@ -5,7 +5,7 @@ from entities.beam import Ray
 
 
 class OpticalElement:
-    def __init__(self,table,position:tuple[float,float],orientation:float,size:float):
+    def __init__(self,table,position:"tuple[float,float]",orientation:float,size:float):
         self.table = table
         self.x,self.y = position
         self.orientation = orientation
@@ -23,7 +23,7 @@ class OpticalElement:
 
 
 class PlaneMirror(OpticalElement):
-    def __init__(self,table,position:tuple[float,float],orientation:float,size:float):
+    def __init__(self,table,position:"tuple[float,float]",orientation:float,size:float):
         super().__init__(table,position,orientation,size)
         self.direction = self.calculate_tangent_vector(self.orientation)
         self.normal = self.calculate_normal_vector(self.direction)
@@ -63,7 +63,7 @@ class PlaneMirror(OpticalElement):
 
 
 class Dicroic(PlaneMirror):
-    def __init__(self,table,position:tuple[float,float],orientation:float,size:float,wavelength_range:list):
+    def __init__(self,table,position:"tuple[float,float]",orientation:float,size:float,wavelength_range:list):
         super().__init__(table,position,orientation,size)
         self.wavelength_range = wavelength_range
     
@@ -74,12 +74,12 @@ class Dicroic(PlaneMirror):
     
 
 class BeamSplitter(PlaneMirror):
-    def __init__(self,table,position:tuple[float,float],orientation:float,size:float):
+    def __init__(self,table,position:"tuple[float,float]",orientation:float,size:float):
         super().__init__(table,position,orientation,size)
 
 
     def intersect(self,ray: Ray):
-        transmitted_ray = Ray(ray.x,ray.y,ray.orientation,ray.wavelength,ray.color,source=ray.source)
+        transmitted_ray = Ray((ray.x,ray.y),ray.orientation,ray.wavelength,ray.color,source=ray.source)
         transmitted_ray.x += ray.direction[0]*1e3
         transmitted_ray.y += ray.direction[1]*1e3
         transmitted_ray.trace(ignore_first_element=self)

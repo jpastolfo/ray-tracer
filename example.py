@@ -14,10 +14,10 @@ source_ir0 = BoxSource(table,
                        position=(0.2,0.7),
                        dimension=(0.1,0.025),
                        orientation=-90,
-                       wavelength=1064,divergence=5,
+                       wavelength=1064,divergence=0,
                        color="red",
                        max_collisions=6,
-                       n_rays=11)
+                       n_rays=1)
 
 source_ir1 = BoxSource(table,
                        position=(1.0,0.7),
@@ -161,12 +161,14 @@ mirror_ir1_3 = Dicroic(table,
                        wavelength_range=[1000,1100],
                        size=0.05)
 
-
+from utils import stl_exporter
 ### RAY-TRACING
 for source in table.sources:
     rays = source.generate_rays()
     for ray in rays:
         ray.trace()
         ray.draw()
+        stl_exporter.create(ray,n_vertices=11,radius=0.01)
+
 
 table.draw()

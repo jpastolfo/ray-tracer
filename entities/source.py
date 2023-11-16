@@ -4,7 +4,7 @@ import numpy as np
 from entities.beam import Ray
 
 class Source:
-    def __init__(self,table,position:tuple[float,float],
+    def __init__(self,table,position:"tuple[float,float]",
                  orientation:float=0.0,wavelength:float=500.0,
                  color:str="red",n_rays:int=1,max_collisions:int=10,
                  linestyle:str="solid"):
@@ -26,7 +26,7 @@ class Source:
     
 
 class PointSource(Source):
-    def __init__(self,table,position:tuple[float,float],divergence:float,**kwargs):
+    def __init__(self,table,position:"tuple[float,float]",divergence:float,**kwargs):
         super().__init__(table,position,**kwargs)
         self.divergence = divergence
     
@@ -46,7 +46,7 @@ class PointSource(Source):
     
 
 class BoxSource(Source):
-    def __init__(self,table,position:tuple[float,float],divergence:float,dimension:tuple[float,float],**kwargs):
+    def __init__(self,table,position:"tuple[float,float]",divergence:float,dimension:"tuple[float,float]",**kwargs):
         super().__init__(table,position,**kwargs)
         self.divergence = divergence
         self.length,self.width = dimension
@@ -82,7 +82,7 @@ class BoxSource(Source):
             x_ray = x_rotated; y_ray = y_rotated
 
         x_ray += self.x; y_ray += self.y
-        
+
         rays = [Ray(position=(x_ray,y_ray),
                     orientation=angle,
                     wavelength=self.wavelength,
