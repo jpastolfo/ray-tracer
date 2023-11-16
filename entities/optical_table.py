@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 class OpticalTable:
-    def __init__(self,dimension:tuple[float,float],gridspacing:float=1.0,scale:float=10):
+    def __init__(self,dimension:"tuple[float,float]",gridspacing:float=1.0,scale:float=10):
         
         self.length, self.width = dimension
         self.gridspacing = gridspacing
@@ -33,7 +33,7 @@ class OpticalTable:
                 grid[0].append(x)
                 grid[1].append(y)
         
-        plt.scatter(grid[0],grid[1],color="grey",alpha=0.5,s=10)
+        plt.scatter(grid[0],grid[1],color="grey",alpha=0.5,s=2)
         
         # plt.axis("off")
 

@@ -1,29 +1,28 @@
-import numpy as np
-import matplotlib.pyplot as plt
+from vector import Vector2D
 
-from dataclasses import dataclass
 
-@dataclass
-class Path:
-    x : list
-    y : list
-    dir_x : list
-    dir_y : list
-    def __init__(self,x:float,y:float,direction:"tuple[float,float]"):
-        self.x = [x]
-        self.y = [y]
-        self.dir_x = [direction[0]]
-        self.dir_y = [direction[1]]
-    
-    def append(self,x:float,y:float,direction:"tuple[float,float]"):
-        self.x.append(x)
-        self.y.append(y)
-        self.dir_x.append(direction[0])
-        self.dir_y.append(direction[1])
-    
+class Ray2D:
+    def __init__(self,origin:Vector2D,direction:Vector2D):
+        self.origin = origin
+        self.direction = direction
 
-class Ray:
-    def __init__(self,position:"tuple[float,float]",orientation:float,wavelength:float,
+
+
+
+
+
+    def __str__(self) -> str:
+        pass
+
+
+    def __repr__(self) -> str:
+        pass
+
+
+
+
+class Ray2D:
+    def __init__(self,origin:"tuple[float,float]",orientation:float,wavelength:float,
                  color:str,source=None,max_collisions:int=10,linestyle:str="solid"):
         
         self.x,self.y = position
