@@ -12,10 +12,10 @@
   </a>
 </p>
 
-This is a small project for optical table layout design. It is not meant for optics simulation, only ray tracing along the optical elements (with collision detection).
+This is a small project for iterative design of lasers layouts. This tool allow the user to define optical elements, such as laser sources, mirrors and dicroics, sitting on an optical table and trace the beam path to easily analyze effects of misalignments on the beam trajectory. Below is a quite chaotic example of the ray-tracer capabilities: each line segment is a plane mirror and the colored lines represents the laser beam paths.
 
-Any help is appreciated!
-
-### Future planned features:
-- Full 2D ray trace
-- User interface for interactive layout design
+<p align="center">
+  <a>
+    <img alt="GitHub repo size" src="https://github.com/jpastolfo/ray-tracer/assets/73600478/d64d1549-e0fb-4a89-b02a-ca802548b856"/>
+  </a>
+</p>
