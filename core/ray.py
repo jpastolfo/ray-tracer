@@ -1,26 +1,5 @@
 from vector import Vector2D
 
-
-class Ray2D:
-    def __init__(self,origin:Vector2D,direction:Vector2D):
-        self.origin = origin
-        self.direction = direction
-
-
-
-
-
-
-    def __str__(self) -> str:
-        pass
-
-
-    def __repr__(self) -> str:
-        pass
-
-
-
-
 class Ray2D:
     def __init__(self,origin:"tuple[float,float]",orientation:float,wavelength:float,
                  color:str,source=None,max_collisions:int=10,linestyle:str="solid"):
